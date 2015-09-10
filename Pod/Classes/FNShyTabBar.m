@@ -80,6 +80,7 @@
 - (void)recoilWithVerticalVelocity:(CGFloat)yVelocity {
     yVelocity = -yVelocity;
     if (yVelocity < 0) {
+        yVelocity = MIN(yVelocity, -20); // Hack to prevent slow animation.
         // Going up, showing
         [UIView animateWithDuration:tabBarElementsYOffset / -yVelocity * 0.4 animations:^{
             for (UIView *view in self.subviews) {
@@ -93,6 +94,7 @@
             _state = FNShyTabBarShowing;
         }];
     } else {
+        yVelocity = MAX(yVelocity, 20); // Hack to prevent slow animation.
 		NSTimeInterval duration = (self.frame.size.height - tabBarElementsYOffset) / yVelocity * 0.4;
         [UIView animateWithDuration:duration animations:^{
             for (UIView *view in self.subviews) {
